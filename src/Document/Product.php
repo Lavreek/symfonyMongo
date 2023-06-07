@@ -5,28 +5,34 @@ namespace App\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 #[MongoDB\Document]
+#[MongoDB\Index(['title' => 'text', 'tag' => 'text'], 'idx_title_tag', unique: true)]
 class Product
 {
-    #[MongoDB\Id]
-    protected string $id;
+    #[MongoDB\Id(type: 'string')]
+    protected $id;
 
     #[MongoDB\Field(type: 'string')]
-    protected string $title;
+    protected $title;
 
     #[MongoDB\Field(type: 'string')]
-    protected string $tag;
+    protected $tag;
 
-    #[MongoDB\ReferenceOne(targetDocument: Attributes::class, cascade: ["persist"], inversedBy: 'product')]
-    protected ?Attributes $attributes;
+    #[MongoDB\ReferenceOne(targetDocument: Attribute::class, cascade: ["persist", "remove"], inversedBy: 'product')]
+    protected ?Attribute $attribute;
 
     public function __construct()
     {
-        $this->attributes = new Attributes();
+        $this->attribute = new Attribute();
     }
 
-    public function getAttributes() : Attributes
+    public function getId() : string
     {
-        return $this->attributes;
+        return $this->id;
+    }
+
+    public function getAttribute() : Attribute
+    {
+        return $this->attribute;
     }
 
     public function setTitle($title) : void

@@ -5,16 +5,16 @@ namespace App\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 #[MongoDB\Document]
-class Attributes
+class Attribute
 {
-    #[MongoDB\Id]
-    protected string $id;
+    #[MongoDB\Id(type: 'string')]
+    protected $id;
 
-    #[MongoDB\ReferenceOne(targetDocument: Product::class, cascade: ["persist"], mappedBy: 'attribute')]
+    #[MongoDB\ReferenceOne(targetDocument: Product::class, cascade: ["persist", "remove"], mappedBy: 'attribute')]
     protected $product;
 
     #[MongoDB\Field(type: 'string')]
-    protected string $connection;
+    protected $connection;
 
     public function getConnection() : string
     {

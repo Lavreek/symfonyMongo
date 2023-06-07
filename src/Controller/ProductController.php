@@ -14,17 +14,21 @@ class ProductController extends AbstractController
     #[Route('/', name: 'app_product')]
     public function index(DocumentManager $manager): Response
     {
-//        $attributes = new Attributes();
-//        $attributes->setConnection("Hy-lok" . uniqid());
 
-        $product = new Product();
-        $product->setTitle(uniqid());
-        $product->setTag(uniqid());
-        $attributes = $product->getAttributes();
-        $attributes->setConnection("HY-LOK2-".uniqid());
+        $productRepo = $manager->getRepository(Product::class);
 
-        $manager->persist($product);
-        $manager->flush();
+        /** @var Product $product */
+//        $product = $productRepo->findOneBy([]);
+//        dd($product->getAttribute());
+
+//        $product = new Product();
+//        $product->setTitle(uniqid());
+//        $product->setTag(uniqid());
+//        $attribute = $product->getAttribute();
+//        $attribute->setConnection("HY-LOK-".uniqid());
+//
+//        $manager->persist($product);
+//        $manager->flush();
 
         return $this->render('product/index.html.twig', [
             'controller_name' => 'ProductController',
