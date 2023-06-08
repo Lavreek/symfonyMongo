@@ -14,6 +14,7 @@ class Attribute
     protected $product;
 
     #[MongoDB\Field(type: 'string')]
+    #[MongoDB\Index(['connection' => 'asc'], 'idx_connection', sparse: true)]
     protected $connection;
 
     public function getConnection() : string

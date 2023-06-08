@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Document\Attributes;
 use App\Document\Product;
+use App\Repository\ProductRepository;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,24 +15,14 @@ class ProductController extends AbstractController
     #[Route('/', name: 'app_product')]
     public function index(DocumentManager $manager): Response
     {
-
+        /** @var ProductRepository $productRepo */
         $productRepo = $manager->getRepository(Product::class);
 
-        /** @var Product $product */
-//        $product = $productRepo->findOneBy([]);
-//        dd($product->getAttribute());
-
-//        $product = new Product();
-//        $product->setTitle(uniqid());
-//        $product->setTag(uniqid());
-//        $attribute = $product->getAttribute();
-//        $attribute->setConnection("HY-LOK-".uniqid());
-//
-//        $manager->persist($product);
-//        $manager->flush();
+        /** @var Product $products */
+        $products = $productRepo->searchByTitle('Р');
 
         return $this->render('product/index.html.twig', [
-            'controller_name' => 'ProductController',
+            'products' => $products
         ]);
     }
 }
