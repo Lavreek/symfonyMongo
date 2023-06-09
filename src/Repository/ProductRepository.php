@@ -34,6 +34,13 @@ class ProductRepository extends DocumentRepository
 
         return $find;
     }
+
+    public function createPregQuery($title) : string
+    {
+        $preg = new PregChars();
+        return $preg->createPregTitle($title);
+    }
+
     /**
      * @throws MongoDBException
      */
@@ -41,7 +48,7 @@ class ProductRepository extends DocumentRepository
     {
         $builder = $this->dm->createQueryBuilder(Product::class);
 
-        $match = [new Regex('.*' . $title . '.*')];
+        $match = [new Regex('.*' . $this->createPregQuery($title) . '.*')];
 
         $find = $builder
             ->select('id', 'title', 'tag')

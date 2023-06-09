@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Document\Attributes;
 use App\Document\Product;
 use App\Repository\ProductRepository;
 use Doctrine\ODM\MongoDB\DocumentManager;
@@ -19,7 +18,7 @@ class ProductController extends AbstractController
         $productRepo = $manager->getRepository(Product::class);
 
         /** @var Product $products */
-        $products = $productRepo->searchByTitle('Р');
+        $products = $productRepo->findAll();
 
         return $this->render('product/index.html.twig', [
             'products' => $products

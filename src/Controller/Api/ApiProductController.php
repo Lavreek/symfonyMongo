@@ -75,11 +75,7 @@ class ApiProductController extends AbstractController
             $searchedTitles = [];
 
             foreach ($products as $product) {
-                array_push(
-                    $searchedTitles,
-//                    str_replace($title, "<b>$title</b>", $product->getTitle())
-                    $product->getTitle()
-                );
+                array_push($searchedTitles, $product->getTitle());
             }
 
             return new JsonResponse(['status' => 'success', 'result' => $searchedTitles]);
